@@ -11,6 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BrandEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;

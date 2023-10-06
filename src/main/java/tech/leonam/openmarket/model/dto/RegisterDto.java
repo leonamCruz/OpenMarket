@@ -1,13 +1,12 @@
 package tech.leonam.openmarket.model.dto;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import tech.leonam.openmarket.model.enums.RoleEnum;
 
 @Data
-public class LoginDto {
-
-    @NotNull
+public class RegisterDto {
     private String cpf;
-    @NotNull
     private String password;
+    private RoleEnum role;
+
 }
