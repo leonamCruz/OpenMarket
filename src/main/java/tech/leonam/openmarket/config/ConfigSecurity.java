@@ -22,8 +22,7 @@ public class ConfigSecurity {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST,"/api/login").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/api/login/register").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/brand").hasRole("ADMIN").anyRequest().authenticated())
+                        .requestMatchers(HttpMethod.POST,"/api/login/register").permitAll())
                 .build();
     }
     @Bean
