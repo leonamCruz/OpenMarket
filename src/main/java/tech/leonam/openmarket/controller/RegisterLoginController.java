@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import tech.leonam.openmarket.exception.CpfExistsExecption;
 import tech.leonam.openmarket.model.dto.RegisterDto;
 import tech.leonam.openmarket.model.entity.LoginEntity;
+import tech.leonam.openmarket.service.RegisterLoginService;
 
 @RestController
 @RequestMapping("/api/login/register")
