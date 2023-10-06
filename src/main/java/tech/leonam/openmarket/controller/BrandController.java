@@ -51,4 +51,5 @@ public class BrandController {
     public ResponseEntity<BrandEntity> update(@PathVariable Long id, @RequestBody BrandEntity entity) throws IdBrandNotFoundExpection {
         return ResponseEntity.ok(service.update(id, entity));
     }
+
 }

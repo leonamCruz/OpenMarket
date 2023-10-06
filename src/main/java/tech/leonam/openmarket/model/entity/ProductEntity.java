@@ -1,10 +1,13 @@
 package tech.leonam.openmarket.model.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
-import tech.leonam.openmarket.model.enums.CategoryEnum;
-import tech.leonam.openmarket.model.enums.UnitMeasurementEnum;
 
 import java.math.BigDecimal;
 
@@ -32,6 +35,8 @@ public class ProductEntity {
 
     private String unit;
 
+    private String codeBar;
+
     @Transient
     private Long brandId;
 
@@ -42,4 +47,5 @@ public class ProductEntity {
         this.brand = brandEntity;
         this.supplier = supplierEntity;
     }
+
 }
