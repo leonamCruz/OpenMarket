@@ -35,8 +35,6 @@ public class LoginService  implements UserDetailsService{
         var token = tokenService.generateToken((LoginEntity) auth.getPrincipal());
 
         return new LoginDtoResponseWithToken(login.getCpf(),token);
-
     }
-
 
 }
