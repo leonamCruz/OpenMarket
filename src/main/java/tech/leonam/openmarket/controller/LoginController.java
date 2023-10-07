@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import tech.leonam.openmarket.model.dto.LoginDto;
-import tech.leonam.openmarket.model.dto.LoginDtoResponseCpf;
+import tech.leonam.openmarket.model.dto.LoginDtoResponseWithToken;
 import tech.leonam.openmarket.service.LoginService;
 
 @RestController
@@ -18,7 +18,7 @@ public class LoginController {
     private LoginService service;
 
     @PostMapping
-    public ResponseEntity<LoginDtoResponseCpf> login(@RequestBody LoginDto login) {
+    public ResponseEntity<LoginDtoResponseWithToken> login(@RequestBody LoginDto login) {
         return ResponseEntity.ok(service.login(login));
     }
 

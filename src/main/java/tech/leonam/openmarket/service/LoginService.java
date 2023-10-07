@@ -9,14 +9,16 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import tech.leonam.openmarket.model.dto.LoginDto;
-import tech.leonam.openmarket.model.dto.LoginDtoResponseCpf;
+import tech.leonam.openmarket.model.dto.LoginDtoResponseWithToken;
+import tech.leonam.openmarket.model.entity.LoginEntity;
 import tech.leonam.openmarket.repository.RespositoryLogin;
 
 @Service
 public class LoginService  implements UserDetailsService{
     @Autowired
     private RespositoryLogin respositoryLogin;
-
+    @Autowired
+    private TokenService tokenService;
     @Autowired
     @Lazy
     private AuthenticationManager authenticationManager;
@@ -26,11 +28,13 @@ public class LoginService  implements UserDetailsService{
         return respositoryLogin.findByCpf(cpf);
     }
 
-    public LoginDtoResponseCpf login(LoginDto login) {
+    public LoginDtoResponseWithToken login(LoginDto login) {
         var userNamePassword = new UsernamePasswordAuthenticationToken(login.getCpf(),login.getPassword());
         var auth = authenticationManager.authenticate(userNamePassword);
 
-        return new LoginDtoResponseCpf(login.getCpf());
+        var token = tokenService.generateToken((LoginEntity) auth.getPrincipal());
+
+        return new LoginDtoResponseWithToken(login.getCpf(),token);
 
     }
 

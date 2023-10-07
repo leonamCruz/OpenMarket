@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class LoginDtoResponseCpf {
+public class LoginDtoResponseWithToken {
     private String cpf;
+    private String token;
 }
