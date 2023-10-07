@@ -6,11 +6,12 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum RoleEnum {
-    MANAGER("manager"),
-    CASHIER("cashier"),
-    ADMINISTRATIVE("administrative"),
-    COUNTER("counter");
+    MANAGER(0,"manager"),
+    CASHIER(1,"cashier"),
+    ADMINISTRATIVE(2,"administrative"),
+    COUNTER(3,"counter");
 
+    private final int code;
     private final String description;
 
     public static RoleEnum descriptionToEnum(String description) {
