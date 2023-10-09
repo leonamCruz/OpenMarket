@@ -15,7 +15,7 @@ public class RegisterLoginService {
     private RespositoryLogin respositoryLogin;
     public LoginEntity register(RegisterDto registerDto) throws CpfExistsExecption, PasswordFormatInvalid {
         if(this.respositoryLogin.findByCpf(registerDto.getCpf()) != null){
-            throw new CpfExistsExecption("The cpf already exists in the database");
+            throw new CpfExistsExecption("CPF já cadastrado.");
         }
 
         var contains = false;
@@ -26,7 +26,7 @@ public class RegisterLoginService {
             }
         }
 
-        if(!contains) throw new PasswordFormatInvalid("Format Password invalid");
+        if(!contains) throw new PasswordFormatInvalid("Senha Inválida.");
 
         var passwordEncripyted = new BCryptPasswordEncoder().encode(registerDto.getPassword());
         var loginEntity = new LoginEntity(registerDto.getCpf(),passwordEncripyted,registerDto.getRole());

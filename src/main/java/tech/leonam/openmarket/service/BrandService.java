@@ -25,13 +25,13 @@ public class BrandService {
     }
 
     public BrandResponseDto findByIdService(Long id) throws IdBrandNotFoundExpection {
-        var findEntity = brandRepository.findById(id).orElseThrow(() -> new IdBrandNotFoundExpection("Id " + id + " not found"));
+        var findEntity = brandRepository.findById(id).orElseThrow(() -> new IdBrandNotFoundExpection("Id " + id + " não localizado."));
 
         return new BrandResponseDto(findEntity.getId(), findEntity.getName());
     }
 
     public BrandEntity findById(Long id) throws IdBrandNotFoundExpection {
-        return brandRepository.findById(id).orElseThrow(() -> new IdBrandNotFoundExpection("Id " + id + " not found"));
+        return brandRepository.findById(id).orElseThrow(() -> new IdBrandNotFoundExpection("Id " + id + " não localizado."));
     }
 
     public List<BrandEntity> findAll() {
@@ -44,7 +44,7 @@ public class BrandService {
     }
 
     public BrandResponseDto update(Long id, BrandSaveDto brandSaveDto) throws IdBrandNotFoundExpection {
-        var findEntity = brandRepository.findById(id).orElseThrow(() -> new IdBrandNotFoundExpection("Id " + id + " not found"));
+        var findEntity = brandRepository.findById(id).orElseThrow(() -> new IdBrandNotFoundExpection("Id " + id + " não localizado."));
         var entity = new BrandEntity();
         entity.setId(findEntity.getId());
         entity.setName(brandSaveDto.getName());
@@ -55,7 +55,7 @@ public class BrandService {
     }
 
     private void verifyIfIdBrandExists(Long id) throws IdBrandNotFoundExpection {
-        if (!brandRepository.existsById(id)) throw new IdBrandNotFoundExpection("Id " + id + " not found");
+        if (!brandRepository.existsById(id)) throw new IdBrandNotFoundExpection("Id " + id + " não localizado.");
     }
 
 }
