@@ -3,6 +3,8 @@ package tech.leonam.openmarket.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tech.leonam.openmarket.exception.IdBrandNotFoundExpection;
+import tech.leonam.openmarket.model.dto.BrandResponseDto;
+import tech.leonam.openmarket.model.dto.BrandSaveDto;
 import tech.leonam.openmarket.model.entity.BrandEntity;
 import tech.leonam.openmarket.repository.BrandRepository;
 
@@ -13,12 +15,23 @@ public class BrandService {
     @Autowired
     private BrandRepository brandRepository;
 
-    public BrandEntity save(BrandEntity entity){
-        return brandRepository.save(entity);
+    public BrandResponseDto save(BrandSaveDto brandSaveDto) {
+        var entity = new BrandEntity();
+        entity.setName(brandSaveDto.getName());
+
+        var entitySaved = brandRepository.save(entity);
+
+        return new BrandResponseDto(entitySaved.getId(), entitySaved.getName());
+    }
+
+    public BrandResponseDto findByIdService(Long id) throws IdBrandNotFoundExpection {
+        var findEntity = brandRepository.findById(id).orElseThrow(() -> new IdBrandNotFoundExpection("Id " + id + " not found"));
+
+        return new BrandResponseDto(findEntity.getId(), findEntity.getName());
     }
 
     public BrandEntity findById(Long id) throws IdBrandNotFoundExpection {
-        return brandRepository.findById(id).orElseThrow(()-> new IdBrandNotFoundExpection("Id " + id + " not found"));
+        return brandRepository.findById(id).orElseThrow(() -> new IdBrandNotFoundExpection("Id " + id + " not found"));
     }
 
     public List<BrandEntity> findAll() {
@@ -30,13 +43,15 @@ public class BrandService {
         brandRepository.deleteById(id);
     }
 
-    public BrandEntity update(Long id, BrandEntity entity) throws IdBrandNotFoundExpection {
-        verifyIfIdBrandExists(id);
+    public BrandResponseDto update(Long id, BrandSaveDto brandSaveDto) throws IdBrandNotFoundExpection {
+        var findEntity = brandRepository.findById(id).orElseThrow(() -> new IdBrandNotFoundExpection("Id " + id + " not found"));
+        var entity = new BrandEntity();
+        entity.setId(findEntity.getId());
+        entity.setName(brandSaveDto.getName());
 
-        var entityRepository = findById(id);
-        entity.setId(entityRepository.getId());
+        var entitySaved = brandRepository.save(entity);
 
-        return save(entity);
+        return new BrandResponseDto(entitySaved.getId(), entitySaved.getName());
     }
 
     private void verifyIfIdBrandExists(Long id) throws IdBrandNotFoundExpection {
