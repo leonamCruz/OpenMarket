@@ -1,10 +1,13 @@
 package tech.leonam.openmarket.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.leonam.openmarket.exception.IdSupplierNotFoundExpection;
+import tech.leonam.openmarket.model.dto.SupplierResponseDto;
+import tech.leonam.openmarket.model.dto.SupplierSaveDto;
 import tech.leonam.openmarket.model.entity.SupplierEntity;
 import tech.leonam.openmarket.service.SupplierService;
 
@@ -16,7 +19,7 @@ public class SupplierController {
     @Autowired
     private SupplierService service;
     @PostMapping
-    public ResponseEntity<SupplierEntity> save(@RequestBody SupplierEntity entity){
+    public ResponseEntity<SupplierResponseDto> save(@RequestBody @Valid SupplierSaveDto entity){
         var entitySaved = service.save(entity);
         var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(entitySaved.getId()).toUri();
 
@@ -28,8 +31,8 @@ public class SupplierController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SupplierEntity> findById(@PathVariable Long id) throws IdSupplierNotFoundExpection {
-        return ResponseEntity.ok(service.findById(id));
+    public ResponseEntity<SupplierResponseDto> findById(@PathVariable Long id) throws IdSupplierNotFoundExpection {
+        return ResponseEntity.ok(service.findByIdService(id));
     }
 
     @DeleteMapping("/{id}")
@@ -38,7 +41,7 @@ public class SupplierController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SupplierEntity> update(@PathVariable Long id, @RequestBody SupplierEntity entity) throws IdSupplierNotFoundExpection {
+    public ResponseEntity<SupplierResponseDto> update(@PathVariable Long id, @RequestBody @Valid SupplierSaveDto entity) throws IdSupplierNotFoundExpection {
         return ResponseEntity.ok(service.update(id,entity));
     }
 }

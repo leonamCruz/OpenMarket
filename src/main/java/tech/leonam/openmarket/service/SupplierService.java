@@ -4,6 +4,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tech.leonam.openmarket.exception.IdSupplierNotFoundExpection;
+import tech.leonam.openmarket.model.dto.SupplierResponseDto;
+import tech.leonam.openmarket.model.dto.SupplierSaveDto;
 import tech.leonam.openmarket.model.entity.SupplierEntity;
 import tech.leonam.openmarket.repository.SupplierRepository;
 
@@ -15,14 +17,44 @@ public class SupplierService {
     private SupplierRepository supplierRepository;
 
     @Transactional
-    public SupplierEntity save(SupplierEntity supplier) {
-        return supplierRepository.save(supplier);
+    public SupplierResponseDto save(SupplierSaveDto supplier) {
+        var entity = dtoToEntity(supplier);
+
+        var entitySaved = supplierRepository.save(entity);
+
+        return entityToResponse(entitySaved);
     }
 
+    public SupplierResponseDto findByIdService(Long id) throws IdSupplierNotFoundExpection {
+        var entityFind = supplierRepository.findById(id).orElseThrow(() -> new IdSupplierNotFoundExpection("Id " + id + " not found"));
+
+        return entityToResponse(entityFind);
+    }
     public SupplierEntity findById(Long id) throws IdSupplierNotFoundExpection {
         return supplierRepository.findById(id).orElseThrow(() -> new IdSupplierNotFoundExpection("Id " + id + " not found"));
     }
 
+    public static SupplierResponseDto entityToResponse(SupplierEntity entity){
+        var entityResponse = new SupplierResponseDto();
+        entityResponse.setId(entity.getId());
+        entityResponse.setName(entity.getName());
+        entityResponse.setEmail(entity.getEmail());
+        entityResponse.setNumberPhone(entity.getNumberPhone());
+        entityResponse.setCnpj(entity.getCnpj());
+        entityResponse.setAddress(entity.getAddress());
+
+        return entityResponse;
+    }
+    public static SupplierEntity dtoToEntity(SupplierSaveDto supplier){
+        var entity = new SupplierEntity();
+        entity.setName(supplier.getName());
+        entity.setEmail(supplier.getEmail());
+        entity.setNumberPhone(supplier.getNumberPhone());
+        entity.setCnpj(supplier.getCnpj());
+        entity.setAddress(supplier.getAddress());
+
+        return entity;
+    }
     public List<SupplierEntity> findAll() {
         return supplierRepository.findAll();
     }
@@ -34,15 +66,19 @@ public class SupplierService {
     }
 
     @Transactional
-    public SupplierEntity update(Long id, SupplierEntity entity) throws IdSupplierNotFoundExpection {
+    public SupplierResponseDto update(Long id, SupplierSaveDto supplier) throws IdSupplierNotFoundExpection {
         verifyIfNotExistsId(id);
+
+        var entity = dtoToEntity(supplier);
         entity.setId(id);
 
-        return save(entity);
+        var saved = supplierRepository.save(entity);
+
+        return entityToResponse(saved);
     }
 
     public void verifyIfNotExistsId(Long id) throws IdSupplierNotFoundExpection {
-        if (!supplierRepository.existsById(id)) throw new IdSupplierNotFoundExpection("Id " + id + " not found");
+        if (!supplierRepository.existsById(id)) throw new IdSupplierNotFoundExpection("Id " + id + " não localizado.");
     }
 
 }

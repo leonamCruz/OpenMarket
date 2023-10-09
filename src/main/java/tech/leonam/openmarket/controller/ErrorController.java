@@ -1,29 +1,31 @@
 package tech.leonam.openmarket.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import tech.leonam.openmarket.exception.*;
+import org.springframework.web.bind.annotation.RestController;
 import tech.leonam.openmarket.model.dto.ErroDto;
+import tech.leonam.openmarket.model.dto.ErroListDto;
 
 @ControllerAdvice
-public class ErrorController extends ResponseEntityExceptionHandler {
-
-    @ExceptionHandler({CategoryEnumException.class,
-            CpfExistsExecption.class,
-            IdBrandNotFoundExpection.class,
-            IdProductNotFoundExpection.class,
-            IdSupplierNotFoundExpection.class,
-            PasswordFormatInvalid.class,
-            UserOrPasswordException.class})
-    public ResponseEntity<ErroDto> customExceptions(Exception e) {
-        System.out.println(e.getLocalizedMessage());
-
+@RestController
+public class ErrorController {
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErroDto> handleException(Exception e) {
         return ResponseEntity.badRequest().body(new ErroDto(HttpStatus.BAD_REQUEST, e.getMessage()));
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErroListDto> argumentInvalid(MethodArgumentNotValidException e) {
+        var bindingResult = e.getBindingResult();
+        var errors = bindingResult.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toList();
+
+        errors.forEach(System.out::println);
+
+        return ResponseEntity.badRequest().body(new ErroListDto(HttpStatus.BAD_REQUEST, errors));
     }
 
 }

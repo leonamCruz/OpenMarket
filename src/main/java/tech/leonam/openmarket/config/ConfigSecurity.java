@@ -28,7 +28,9 @@ public class ConfigSecurity {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST,"/api/login").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/login/register").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/api/brand").hasRole("ADMIN").anyRequest().authenticated()
+                        .requestMatchers(HttpMethod.POST,"/api/supplier").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST,"/api/brand").hasRole("ADMIN")
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

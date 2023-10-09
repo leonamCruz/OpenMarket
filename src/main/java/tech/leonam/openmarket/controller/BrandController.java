@@ -51,7 +51,7 @@ public class BrandController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BrandResponseDto> update(@PathVariable Long id, @RequestBody BrandSaveDto entity) throws IdBrandNotFoundExpection {
+    public ResponseEntity<BrandResponseDto> update(@PathVariable Long id, @RequestBody @Valid BrandSaveDto entity) throws IdBrandNotFoundExpection {
         return ResponseEntity.ok(service.update(id, entity));
     }
 

@@ -44,14 +44,29 @@ public class BrandService {
     }
 
     public BrandResponseDto update(Long id, BrandSaveDto brandSaveDto) throws IdBrandNotFoundExpection {
-        var findEntity = brandRepository.findById(id).orElseThrow(() -> new IdBrandNotFoundExpection("Id " + id + " não localizado."));
-        var entity = new BrandEntity();
-        entity.setId(findEntity.getId());
-        entity.setName(brandSaveDto.getName());
+        verifyIfIdBrandExists(id);
+
+        var entity = dtoToEntity(brandSaveDto);
+        entity.setId(id);
 
         var entitySaved = brandRepository.save(entity);
 
-        return new BrandResponseDto(entitySaved.getId(), entitySaved.getName());
+        return entityToResponse(entitySaved);
+    }
+
+    public static BrandResponseDto entityToResponse(BrandEntity entity){
+        var entityReturn = new BrandResponseDto();
+        entity.setId(entity.getId());
+        entity.setName(entityReturn.getName());
+
+        return entityReturn;
+    }
+
+    public static BrandEntity dtoToEntity(BrandSaveDto brandSaveDto){
+        var entity = new BrandEntity();
+        entity.setName(brandSaveDto.getName());
+
+        return entity;
     }
 
     private void verifyIfIdBrandExists(Long id) throws IdBrandNotFoundExpection {

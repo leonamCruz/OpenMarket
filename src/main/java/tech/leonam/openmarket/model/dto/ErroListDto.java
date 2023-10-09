@@ -3,12 +3,13 @@ package tech.leonam.openmarket.model.dto;
 import lombok.*;
 import org.springframework.http.HttpStatus;
 
+import java.util.List;
+
 @Data
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
-public class ErroDto {
+public class ErroListDto {
     private HttpStatus status;
-    private String message;
+    private List<String> errors;
 }

@@ -1,15 +1,21 @@
 package tech.leonam.openmarket.model.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Data
 @Getter
-@AllArgsConstructor
+@Setter
 @NoArgsConstructor
-public class BrandResponseDto {
+public class SupplierResponseDto {
+
     private long id;
     private String name;
+    private String cnpj;
+    private String address;
+    private String numberPhone;
+    private String email;
+
 }
