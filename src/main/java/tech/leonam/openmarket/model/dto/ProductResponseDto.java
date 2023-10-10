@@ -1,36 +1,26 @@
-package tech.leonam.openmarket.model.entity;
+package tech.leonam.openmarket.model.dto;
 
-import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import tech.leonam.openmarket.model.entity.BrandEntity;
+import tech.leonam.openmarket.model.entity.SupplierEntity;
 import tech.leonam.openmarket.model.enums.CategoryEnum;
 
 import java.math.BigDecimal;
-
-@Entity
+@Data
 @Getter
 @Setter
-public class ProductEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+public class ProductResponseDto {
+
     private long id;
-
     private String name;
-
     private long amount;
-
     private BigDecimal price;
-
-    @ManyToOne
     private BrandEntity brand;
-
-    @ManyToOne
     private SupplierEntity supplier;
-
     private CategoryEnum category;
-
     private String unit;
-
     private String codeBar;
 
 }

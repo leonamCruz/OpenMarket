@@ -1,5 +1,6 @@
 package tech.leonam.openmarket.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -7,6 +8,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.leonam.openmarket.exception.IdBrandNotFoundExpection;
 import tech.leonam.openmarket.exception.IdProductNotFoundExpection;
 import tech.leonam.openmarket.exception.IdSupplierNotFoundExpection;
+import tech.leonam.openmarket.model.dto.ProductResponseDto;
+import tech.leonam.openmarket.model.dto.ProductSaveDto;
 import tech.leonam.openmarket.model.entity.ProductEntity;
 import tech.leonam.openmarket.service.ProductService;
 
@@ -19,7 +22,7 @@ public class ProductController {
     private ProductService service;
 
     @PostMapping
-    public ResponseEntity<ProductEntity> save(@RequestBody ProductEntity product) throws IdSupplierNotFoundExpection, IdBrandNotFoundExpection {
+    public ResponseEntity<ProductResponseDto> save(@RequestBody @Valid ProductSaveDto product) throws IdSupplierNotFoundExpection, IdBrandNotFoundExpection {
         var entitySaved = service.save(product);
         var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(entitySaved.getId()).toUri();
 
@@ -37,7 +40,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductEntity> update(@PathVariable Long id, @RequestBody ProductEntity entity) throws IdProductNotFoundExpection, IdSupplierNotFoundExpection, IdBrandNotFoundExpection {
+    public ResponseEntity<ProductResponseDto> update(@PathVariable Long id, @RequestBody @Valid ProductSaveDto entity) throws IdSupplierNotFoundExpection, IdBrandNotFoundExpection {
         return ResponseEntity.ok(service.update(id, entity));
     }
 

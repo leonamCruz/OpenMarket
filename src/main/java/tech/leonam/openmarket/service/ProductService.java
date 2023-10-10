@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import tech.leonam.openmarket.exception.IdBrandNotFoundExpection;
 import tech.leonam.openmarket.exception.IdProductNotFoundExpection;
 import tech.leonam.openmarket.exception.IdSupplierNotFoundExpection;
+import tech.leonam.openmarket.model.dto.ProductResponseDto;
+import tech.leonam.openmarket.model.dto.ProductSaveDto;
 import tech.leonam.openmarket.model.entity.ProductEntity;
 import tech.leonam.openmarket.repository.ProductRepository;
 
@@ -19,14 +21,44 @@ public class ProductService {
     @Autowired
     private SupplierService supplierService;
 
-    public ProductEntity save(ProductEntity entity) throws IdSupplierNotFoundExpection, IdBrandNotFoundExpection {
-        var entityBrand = brandService.findById(entity.getBrandId());
-        var entitySupplier = supplierService.findById(entity.getSupplierId());
+    public ProductResponseDto save(ProductSaveDto entity) throws IdSupplierNotFoundExpection, IdBrandNotFoundExpection {
+        var entityBrand = brandService.findById(entity.getIdBrand());
+        var entitySupplier = supplierService.findById(entity.getIdSupplier());
 
-        entity.setBrand(entityBrand);
-        entity.setSupplier(entitySupplier);
+        var entityForSave = dtoToEntity(entity);
+        entityForSave.setBrand(entityBrand);
+        entityForSave.setSupplier(entitySupplier);
 
-        return productRepository.save(entity);
+        var entitySaved = productRepository.save(entityForSave);
+
+        return entityToResponse(entitySaved);
+    }
+
+    private static ProductEntity dtoToEntity(ProductSaveDto saveDto){
+        var productEntity = new ProductEntity();
+        productEntity.setName(saveDto.getName());
+        productEntity.setAmount(saveDto.getAmount());
+        productEntity.setPrice(saveDto.getPrice());
+        productEntity.setUnit(saveDto.getUnit());
+        productEntity.setCodeBar(saveDto.getCodeBar());
+        productEntity.setCategory(saveDto.getCategory());
+
+        return productEntity;
+    }
+
+    private static ProductResponseDto entityToResponse(ProductEntity entity){
+        var productResponse = new ProductResponseDto();
+        productResponse.setId(entity.getId());
+        productResponse.setName(entity.getName());
+        productResponse.setAmount(entity.getAmount());
+        productResponse.setPrice(entity.getPrice());
+        productResponse.setUnit(entity.getUnit());
+        productResponse.setCodeBar(entity.getCodeBar());
+        productResponse.setCategory(entity.getCategory());
+        productResponse.setBrand(entity.getBrand());
+        productResponse.setSupplier(entity.getSupplier());
+
+        return productResponse;
     }
 
     public List<ProductEntity> findAll() {
@@ -34,16 +66,22 @@ public class ProductService {
     }
 
     public ProductEntity findById(Long id) throws IdProductNotFoundExpection {
-        return productRepository.findById(id).orElseThrow(()->new IdProductNotFoundExpection("Id " + id + " not found"));
+        return productRepository.findById(id).orElseThrow(()->new IdProductNotFoundExpection("Id " + id + " não localizado."));
     }
 
-    public ProductEntity update(Long id, ProductEntity entity) throws IdProductNotFoundExpection, IdSupplierNotFoundExpection, IdBrandNotFoundExpection {
-        verifyIfIdProductExists(id);
+    public ProductResponseDto update(Long id, ProductSaveDto entity) throws IdSupplierNotFoundExpection, IdBrandNotFoundExpection {
+        var entityBrand = brandService.findById(entity.getIdBrand());
+        var entitySupplier = supplierService.findById(entity.getIdSupplier());
 
-        var entityRepository = findById(id);
-        entity.setId(entityRepository.getId());
+        var entityForSave = dtoToEntity(entity);
 
-        return save(entity);
+        entityForSave.setBrand(entityBrand);
+        entityForSave.setSupplier(entitySupplier);
+        entity.setIdBrand(id);
+
+        var entitySaved = productRepository.save(entityForSave);
+
+        return entityToResponse(entitySaved);
     }
 
     public void delete(Long id) throws IdProductNotFoundExpection {
@@ -52,7 +90,7 @@ public class ProductService {
     }
 
     public void verifyIfIdProductExists(long id) throws IdProductNotFoundExpection {
-        if (!productRepository.existsById(id)) throw new IdProductNotFoundExpection("Id " + id + " not found");
+        if (!productRepository.existsById(id)) throw new IdProductNotFoundExpection("Id " + id + " não localizado.");
     }
 
 }

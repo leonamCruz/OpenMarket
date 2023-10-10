@@ -30,6 +30,7 @@ public class ConfigSecurity {
                         .requestMatchers(HttpMethod.POST,"/api/login/register").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/supplier").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/brand").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST,"/api/product").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
