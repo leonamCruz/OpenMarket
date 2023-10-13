@@ -1,6 +1,5 @@
 package tech.leonam.openmarket.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tech.leonam.openmarket.exception.IdBrandNotFoundExpection;
 import tech.leonam.openmarket.model.dto.BrandResponseDto;
@@ -11,9 +10,12 @@ import tech.leonam.openmarket.repository.BrandRepository;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class BrandService {
-    private BrandRepository brandRepository;
+    private final BrandRepository brandRepository;
+
+    public BrandService(BrandRepository brandRepository) {
+        this.brandRepository = brandRepository;
+    }
 
     public BrandResponseDto save(BrandSaveDto brandSaveDto) {
         var entity = new BrandEntity();

@@ -1,7 +1,6 @@
 package tech.leonam.openmarket.controller;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,9 +14,12 @@ import tech.leonam.openmarket.service.RegisterLoginService;
 
 @RestController
 @RequestMapping("/api/login/register")
-@RequiredArgsConstructor
 public class RegisterLoginController {
-    private RegisterLoginService service;
+    private final RegisterLoginService service;
+
+    public RegisterLoginController(RegisterLoginService service) {
+        this.service = service;
+    }
 
     @PostMapping()
     public ResponseEntity<LoginEntity> register(@RequestBody @Valid RegisterDto entity) throws CpfExistsExecption, PasswordFormatInvalid {

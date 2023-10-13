@@ -1,6 +1,5 @@
 package tech.leonam.openmarket.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tech.leonam.openmarket.exception.IdBrandNotFoundExpection;
 import tech.leonam.openmarket.exception.IdProductNotFoundExpection;
@@ -13,11 +12,16 @@ import tech.leonam.openmarket.repository.ProductRepository;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class ProductService {
-    private ProductRepository productRepository;
-    private BrandService brandService;
-    private SupplierService supplierService;
+    private final ProductRepository productRepository;
+    private final BrandService brandService;
+    private final SupplierService supplierService;
+
+    public ProductService(ProductRepository productRepository, BrandService brandService, SupplierService supplierService) {
+        this.productRepository = productRepository;
+        this.brandService = brandService;
+        this.supplierService = supplierService;
+    }
 
     public ProductResponseDto save(ProductSaveDto entity) throws IdSupplierNotFoundExpection, IdBrandNotFoundExpection {
         var entityBrand = brandService.findById(entity.getIdBrand());

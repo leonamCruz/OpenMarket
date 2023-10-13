@@ -1,6 +1,5 @@
 package tech.leonam.openmarket.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import tech.leonam.openmarket.exception.CpfExistsExecption;
@@ -9,10 +8,14 @@ import tech.leonam.openmarket.model.dto.RegisterDto;
 import tech.leonam.openmarket.model.entity.LoginEntity;
 import tech.leonam.openmarket.repository.RespositoryLogin;
 
-@RequiredArgsConstructor
 @Service
 public class RegisterLoginService {
-    private RespositoryLogin respositoryLogin;
+    private final RespositoryLogin respositoryLogin;
+
+    public RegisterLoginService(RespositoryLogin respositoryLogin) {
+        this.respositoryLogin = respositoryLogin;
+    }
+
     public LoginEntity register(RegisterDto registerDto) throws CpfExistsExecption, PasswordFormatInvalid {
         if(this.respositoryLogin.findByCpf(registerDto.getCpf()) != null){
             throw new CpfExistsExecption("CPF já cadastrado.");

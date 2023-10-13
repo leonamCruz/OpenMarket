@@ -1,6 +1,5 @@
 package tech.leonam.openmarket.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,10 +11,13 @@ import tech.leonam.openmarket.service.LoginService;
 
 @RestController
 @RequestMapping("/api/login")
-@RequiredArgsConstructor
 public class LoginController {
 
-    private LoginService service;
+    private final LoginService service;
+
+    public LoginController(LoginService service) {
+        this.service = service;
+    }
 
     @PostMapping
     public ResponseEntity<LoginDtoResponseWithToken> login(@RequestBody LoginDto login) {

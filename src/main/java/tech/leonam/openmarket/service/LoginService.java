@@ -1,6 +1,6 @@
 package tech.leonam.openmarket.service;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,10 +14,13 @@ import tech.leonam.openmarket.model.entity.LoginEntity;
 import tech.leonam.openmarket.repository.RespositoryLogin;
 
 @Service
-@RequiredArgsConstructor
-public class LoginService  implements UserDetailsService{
+public class LoginService implements UserDetailsService {
+
+    @Autowired
     private RespositoryLogin respositoryLogin;
+    @Autowired
     private TokenService tokenService;
+    @Autowired
     @Lazy
     private AuthenticationManager authenticationManager;
 
@@ -27,12 +30,12 @@ public class LoginService  implements UserDetailsService{
     }
 
     public LoginDtoResponseWithToken login(LoginDto login) {
-        var userNamePassword = new UsernamePasswordAuthenticationToken(login.getCpf(),login.getPassword());
+        var userNamePassword = new UsernamePasswordAuthenticationToken(login.getCpf(), login.getPassword());
         var auth = authenticationManager.authenticate(userNamePassword);
 
         var token = tokenService.generateToken((LoginEntity) auth.getPrincipal());
 
-        return new LoginDtoResponseWithToken(login.getCpf(),token);
+        return new LoginDtoResponseWithToken(login.getCpf(), token);
     }
 
 }
