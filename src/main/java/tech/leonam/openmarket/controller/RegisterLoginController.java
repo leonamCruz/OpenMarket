@@ -1,7 +1,7 @@
 package tech.leonam.openmarket.controller;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,8 +15,8 @@ import tech.leonam.openmarket.service.RegisterLoginService;
 
 @RestController
 @RequestMapping("/api/login/register")
+@RequiredArgsConstructor
 public class RegisterLoginController {
-    @Autowired
     private RegisterLoginService service;
 
     @PostMapping()

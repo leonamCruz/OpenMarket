@@ -1,7 +1,7 @@
 package tech.leonam.openmarket.controller;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -15,8 +15,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/supplier")
+@RequiredArgsConstructor
 public class SupplierController {
-    @Autowired
     private SupplierService service;
     @PostMapping
     public ResponseEntity<SupplierResponseDto> save(@RequestBody @Valid SupplierSaveDto entity){

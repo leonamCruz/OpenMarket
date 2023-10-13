@@ -1,6 +1,6 @@
 package tech.leonam.openmarket.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tech.leonam.openmarket.exception.IdBrandNotFoundExpection;
 import tech.leonam.openmarket.exception.IdProductNotFoundExpection;
@@ -13,12 +13,10 @@ import tech.leonam.openmarket.repository.ProductRepository;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProductService {
-    @Autowired
     private ProductRepository productRepository;
-    @Autowired
     private BrandService brandService;
-    @Autowired
     private SupplierService supplierService;
 
     public ProductResponseDto save(ProductSaveDto entity) throws IdSupplierNotFoundExpection, IdBrandNotFoundExpection {

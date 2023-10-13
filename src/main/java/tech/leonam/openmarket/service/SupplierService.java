@@ -1,7 +1,7 @@
 package tech.leonam.openmarket.service;
 
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tech.leonam.openmarket.exception.IdSupplierNotFoundExpection;
 import tech.leonam.openmarket.model.dto.SupplierResponseDto;
@@ -12,8 +12,8 @@ import tech.leonam.openmarket.repository.SupplierRepository;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class SupplierService {
-    @Autowired
     private SupplierRepository supplierRepository;
 
     @Transactional
