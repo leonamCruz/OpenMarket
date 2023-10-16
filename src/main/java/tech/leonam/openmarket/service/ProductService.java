@@ -36,7 +36,7 @@ public class ProductService {
         return entityToResponse(entitySaved);
     }
 
-    private static ProductEntity dtoToEntity(ProductSaveDto saveDto){
+    public ProductEntity dtoToEntity(ProductSaveDto saveDto){
         var productEntity = new ProductEntity();
         productEntity.setName(saveDto.getName());
         productEntity.setAmount(saveDto.getAmount());
@@ -48,7 +48,7 @@ public class ProductService {
         return productEntity;
     }
 
-    private static ProductResponseDto entityToResponse(ProductEntity entity){
+    public ProductResponseDto entityToResponse(ProductEntity entity){
         var productResponse = new ProductResponseDto();
         productResponse.setId(entity.getId());
         productResponse.setName(entity.getName());
@@ -99,7 +99,7 @@ public class ProductService {
         if (!productRepository.existsById(id)) throw new IdProductNotFoundExpection("Id " + id + " não localizado.");
     }
 
-    protected ProductEntity findByCodeBar(String codeBar) {
+    public ProductEntity findByCodeBar(String codeBar) {
         return productRepository.findByCodeBar(codeBar);
     }
 

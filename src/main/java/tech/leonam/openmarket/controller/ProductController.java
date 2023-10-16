@@ -50,4 +50,10 @@ public class ProductController {
     public void delete(@PathVariable Long id) throws IdProductNotFoundExpection {
         service.delete(id);
     }
+
+    @GetMapping("/{codeBar}")
+    public ResponseEntity<ProductResponseDto> findByCodeBar(@PathVariable String codeBar){
+        return ResponseEntity.ok(service.entityToResponse(service.findByCodeBar(codeBar)));
+    }
+
 }

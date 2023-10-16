@@ -35,7 +35,7 @@ public class SaleService {
         return entityToResponse(entitySaved);
     }
 
-    private SaleResponseDto entityToResponse(SaleEntity entity){
+    public SaleResponseDto entityToResponse(SaleEntity entity){
         var response = new SaleResponseDto();
         response.setId(entity.getId());
         response.setProduct(entity.getProduct());
@@ -60,7 +60,7 @@ public class SaleService {
         return entity;
     }
 
-    private ProductEntity searchProductForCodeBar(String codeBar){
+    public ProductEntity searchProductForCodeBar(String codeBar){
         return productService.findByCodeBar(codeBar);
     }
 
