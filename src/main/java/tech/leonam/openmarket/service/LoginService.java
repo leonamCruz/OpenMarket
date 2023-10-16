@@ -1,6 +1,5 @@
 package tech.leonam.openmarket.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,13 +15,15 @@ import tech.leonam.openmarket.repository.RespositoryLogin;
 @Service
 public class LoginService implements UserDetailsService {
 
-    @Autowired
-    private RespositoryLogin respositoryLogin;
-    @Autowired
-    private TokenService tokenService;
-    @Autowired
-    @Lazy
-    private AuthenticationManager authenticationManager;
+    private final RespositoryLogin respositoryLogin;
+    private final TokenService tokenService;
+    private final AuthenticationManager authenticationManager;
+
+    public LoginService(RespositoryLogin respositoryLogin, TokenService tokenService, @Lazy AuthenticationManager authenticationManager) {
+        this.respositoryLogin = respositoryLogin;
+        this.tokenService = tokenService;
+        this.authenticationManager = authenticationManager;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String cpf) throws UsernameNotFoundException {
