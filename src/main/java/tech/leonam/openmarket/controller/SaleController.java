@@ -4,6 +4,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import tech.leonam.openmarket.exception.AmountProductException;
+import tech.leonam.openmarket.exception.IdSaleNotFoundException;
 import tech.leonam.openmarket.model.dto.SaleResponseDto;
 import tech.leonam.openmarket.model.dto.SaleSaveDto;
 import tech.leonam.openmarket.model.entity.SaleEntity;
@@ -22,7 +24,7 @@ public class SaleController {
     }
 
     @PostMapping
-    public ResponseEntity<SaleResponseDto> saveSale(@RequestBody @Valid SaleSaveDto dto){
+    public ResponseEntity<SaleResponseDto> saveSale(@RequestBody @Valid SaleSaveDto dto) throws AmountProductException {
         var entitySaved = service.saveSale(dto);
         var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(entitySaved.getId()).toUri();
 
@@ -30,7 +32,7 @@ public class SaleController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteSale(@PathVariable Long id){
+    public void deleteSale(@PathVariable Long id) throws IdSaleNotFoundException {
         service.deleteSale(id);
     }
 

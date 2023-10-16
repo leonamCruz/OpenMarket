@@ -22,8 +22,8 @@ public class SupplierController {
     }
 
     @PostMapping
-    public ResponseEntity<SupplierResponseDto> save(@RequestBody @Valid SupplierSaveDto entity){
-        var entitySaved = service.save(entity);
+    public ResponseEntity<SupplierResponseDto> save(@RequestBody @Valid SupplierSaveDto dto){
+        var entitySaved = service.save(dto);
         var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(entitySaved.getId()).toUri();
 
         return ResponseEntity.created(uri).body(entitySaved);

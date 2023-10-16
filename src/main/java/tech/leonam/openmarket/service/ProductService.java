@@ -86,6 +86,10 @@ public class ProductService {
         return entityToResponse(entitySaved);
     }
 
+    public ProductResponseDto update(ProductEntity entity){
+        return entityToResponse(productRepository.save(entity));
+    }
+
     public void delete(Long id) throws IdProductNotFoundExpection {
         verifyIfIdProductExists(id);
         productRepository.deleteById(id);
@@ -93,6 +97,10 @@ public class ProductService {
 
     public void verifyIfIdProductExists(long id) throws IdProductNotFoundExpection {
         if (!productRepository.existsById(id)) throw new IdProductNotFoundExpection("Id " + id + " não localizado.");
+    }
+
+    protected ProductEntity findByCodeBar(String codeBar) {
+        return productRepository.findByCodeBar(codeBar);
     }
 
 }
