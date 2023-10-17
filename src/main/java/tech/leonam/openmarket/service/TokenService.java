@@ -13,16 +13,19 @@ import java.time.ZoneOffset;
 
 @Service
 public class TokenService {
+
+    public static final String ISSUER = "open-market";
+
     @Value("${api.security.token.secret}")
     private String secret;
 
     public String generateToken(LoginEntity entity) {
-        return JWT.create().withIssuer("open-market").withSubject(entity.getCpf()).withExpiresAt(genExpirationDate()).sign(Algorithm.HMAC256(secret));
+        return JWT.create().withIssuer(ISSUER).withSubject(entity.getCpf()).withExpiresAt(genExpirationDate()).sign(Algorithm.HMAC256(secret));
     }
 
     public String validationToken(String token) {
         try {
-            return JWT.require(Algorithm.HMAC256(secret)).withIssuer("open-market").build().verify(token).getSubject();
+            return JWT.require(Algorithm.HMAC256(secret)).withIssuer(ISSUER).build().verify(token).getSubject();
         } catch (JWTVerificationException e) {
             return "";
         }
