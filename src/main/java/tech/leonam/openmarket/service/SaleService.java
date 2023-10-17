@@ -58,7 +58,7 @@ public class SaleService {
     }
 
     public SaleResponseDto findById(Long id) {
-        return null;
+        return modelMapper.map(repository.findById(id), SaleResponseDto.class);
     }
 
     public SaleResponseDto updateSale(Long id, SaleSaveDto dto) {
