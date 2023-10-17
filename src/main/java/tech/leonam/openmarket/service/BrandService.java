@@ -1,5 +1,7 @@
 package tech.leonam.openmarket.service;
 
+import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import tech.leonam.openmarket.exception.IdBrandNotFoundExpection;
 import tech.leonam.openmarket.model.dto.BrandResponseDto;
@@ -10,20 +12,15 @@ import tech.leonam.openmarket.repository.BrandRepository;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class BrandService {
     private final BrandRepository brandRepository;
-
-    public BrandService(BrandRepository brandRepository) {
-        this.brandRepository = brandRepository;
-    }
+    private final ModelMapper modelMapper;
 
     public BrandResponseDto save(BrandSaveDto brandSaveDto) {
-        var entity = new BrandEntity();
-        entity.setName(brandSaveDto.getName());
+        var entitySaved = brandRepository.save(modelMapper.map(brandSaveDto,BrandEntity.class));
 
-        var entitySaved = brandRepository.save(entity);
-
-        return new BrandResponseDto(entitySaved.getId(), entitySaved.getName());
+        return modelMapper.map(entitySaved, BrandResponseDto.class);
     }
 
     public BrandResponseDto findByIdService(Long id) throws IdBrandNotFoundExpection {
@@ -48,27 +45,12 @@ public class BrandService {
     public BrandResponseDto update(Long id, BrandSaveDto brandSaveDto) throws IdBrandNotFoundExpection {
         verifyIfIdBrandExists(id);
 
-        var entity = dtoToEntity(brandSaveDto);
+        var entity = modelMapper.map(brandSaveDto,BrandEntity.class);
         entity.setId(id);
 
         var entitySaved = brandRepository.save(entity);
 
-        return entityToResponse(entitySaved);
-    }
-
-    public static BrandResponseDto entityToResponse(BrandEntity entity){
-        var entityReturn = new BrandResponseDto();
-        entity.setId(entity.getId());
-        entity.setName(entityReturn.getName());
-
-        return entityReturn;
-    }
-
-    public static BrandEntity dtoToEntity(BrandSaveDto brandSaveDto){
-        var entity = new BrandEntity();
-        entity.setName(brandSaveDto.getName());
-
-        return entity;
+        return modelMapper.map(entitySaved, BrandResponseDto.class);
     }
 
     private void verifyIfIdBrandExists(Long id) throws IdBrandNotFoundExpection {
