@@ -61,7 +61,7 @@ public class SaleService {
     }
 
     public ProductEntity searchProductForCodeBar(String codeBar){
-        return productService.findByCodeBar(codeBar);
+        return productService.findByCodeBarEntity(codeBar);
     }
 
     public void deleteSale(Long id) throws IdSaleNotFoundException {

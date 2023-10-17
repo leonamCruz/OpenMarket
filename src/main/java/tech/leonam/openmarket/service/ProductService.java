@@ -69,8 +69,12 @@ public class ProductService {
         if (!productRepository.existsById(id)) throw new IdProductNotFoundExpection("Id " + id + " não localizado.");
     }
 
-    public ProductEntity findByCodeBar(String codeBar) {
+    public ProductEntity findByCodeBarEntity(String codeBar) {
         return productRepository.findByCodeBar(codeBar);
+    }
+
+    public ProductResponseDto findByCodeBarResponse(String codeBar){
+        return modelMapper.map(productRepository.findByCodeBar(codeBar), ProductResponseDto.class);
     }
 
 }

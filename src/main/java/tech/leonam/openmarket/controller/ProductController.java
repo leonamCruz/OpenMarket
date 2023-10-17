@@ -53,7 +53,7 @@ public class ProductController {
 
     @GetMapping("/{codeBar}")
     public ResponseEntity<ProductResponseDto> findByCodeBar(@PathVariable String codeBar){
-        return ResponseEntity.ok(service.entityToResponse(service.findByCodeBar(codeBar)));
+        return ResponseEntity.ok(service.findByCodeBarResponse(codeBar));
     }
 
 }
