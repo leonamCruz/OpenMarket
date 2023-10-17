@@ -1,5 +1,6 @@
 package tech.leonam.openmarket.config;
 
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -16,13 +17,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@AllArgsConstructor
 public class ConfigSecurity {
 
     private final SecurityFilter securityFilter;
-
-    public ConfigSecurity(SecurityFilter securityFilter) {
-        this.securityFilter = securityFilter;
-    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
