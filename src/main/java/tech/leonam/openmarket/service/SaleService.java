@@ -1,6 +1,7 @@
 package tech.leonam.openmarket.service;
 
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,14 +16,10 @@ import tech.leonam.openmarket.repository.SaleRepository;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class SaleService {
     private final SaleRepository repository;
     private final ProductService productService;
-    public SaleService(SaleRepository repository, ProductService productService) {
-        this.repository = repository;
-        this.productService = productService;
-    }
-
     @PostMapping
     public SaleResponseDto saveSale(@RequestBody @Valid SaleSaveDto dto) throws AmountProductException {
         var entity = dtoToEntity(dto);
