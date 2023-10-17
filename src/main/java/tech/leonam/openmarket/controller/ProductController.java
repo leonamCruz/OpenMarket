@@ -1,6 +1,7 @@
 package tech.leonam.openmarket.controller;
 
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -16,12 +17,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/product")
+@AllArgsConstructor
 public class ProductController {
-    private final ProductService service;
 
-    public ProductController(ProductService service) {
-        this.service = service;
-    }
+    private final ProductService service;
 
     @PostMapping
     public ResponseEntity<ProductResponseDto> save(@RequestBody @Valid ProductSaveDto product) throws IdSupplierNotFoundExpection, IdBrandNotFoundExpection {
