@@ -5,7 +5,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import tech.leonam.openmarket.exception.CpfExistsExecption;
-import tech.leonam.openmarket.exception.PasswordFormatInvalid;
+import tech.leonam.openmarket.exception.PasswordFormatInvalidException;
 import tech.leonam.openmarket.model.dto.LoginRegisterDto;
 import tech.leonam.openmarket.model.dto.LoginRegisterResponseDto;
 import tech.leonam.openmarket.model.entity.LoginEntity;
@@ -17,7 +17,7 @@ public class RegisterLoginService {
     private final RespositoryLogin respositoryLogin;
     private final ModelMapper modelMapper;
 
-    public LoginRegisterResponseDto save(LoginRegisterDto registerDto) throws CpfExistsExecption, PasswordFormatInvalid {
+    public LoginRegisterResponseDto save(LoginRegisterDto registerDto) throws CpfExistsExecption, PasswordFormatInvalidException {
         verifyCpf(registerDto.getCpf());
         verifyPassword(registerDto.getPassword());
 
@@ -37,7 +37,7 @@ public class RegisterLoginService {
         }
     }
 
-    protected void verifyPassword(String password) throws PasswordFormatInvalid {
+    protected void verifyPassword(String password) throws PasswordFormatInvalidException {
         var contains = false;
         for(var c: password.toCharArray()){
             if(Character.isDigit(c)){
@@ -46,7 +46,7 @@ public class RegisterLoginService {
             }
         }
 
-        if(!contains) throw new PasswordFormatInvalid("Senha Inválida.");
+        if(!contains) throw new PasswordFormatInvalidException("Senha Inválida.");
     }
 
 }

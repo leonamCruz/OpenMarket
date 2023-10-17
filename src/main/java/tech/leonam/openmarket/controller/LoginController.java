@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.leonam.openmarket.exception.CpfExistsExecption;
-import tech.leonam.openmarket.exception.PasswordFormatInvalid;
+import tech.leonam.openmarket.exception.PasswordFormatInvalidException;
 import tech.leonam.openmarket.model.dto.LoginDto;
 import tech.leonam.openmarket.model.dto.LoginRegisterDto;
 import tech.leonam.openmarket.model.dto.LoginRegisterResponseDto;
@@ -31,7 +31,7 @@ public class LoginController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<LoginRegisterResponseDto> register(@RequestBody @Valid LoginRegisterDto registerDto) throws PasswordFormatInvalid, CpfExistsExecption {
+    public ResponseEntity<LoginRegisterResponseDto> register(@RequestBody @Valid LoginRegisterDto registerDto) throws PasswordFormatInvalidException, CpfExistsExecption {
         var entitySaved = registerLoginService.save(registerDto);
         var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(entitySaved.getCpf()).toUri();
 
