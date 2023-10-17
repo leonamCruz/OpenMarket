@@ -46,7 +46,7 @@ public class SaleController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SaleResponseDto> updateSale(@PathVariable Long id, @RequestBody @Valid SaleSaveDto dto){
+    public ResponseEntity<SaleResponseDto> updateSale(@PathVariable Long id, @RequestBody @Valid SaleSaveDto dto) throws AmountProductException {
         return ResponseEntity.ok(service.updateSale(id, dto));
     }
 

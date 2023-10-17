@@ -61,7 +61,18 @@ public class SaleService {
         return modelMapper.map(repository.findById(id), SaleResponseDto.class);
     }
 
-    public SaleResponseDto updateSale(Long id, SaleSaveDto dto) {
-        return null;
+    public SaleResponseDto updateSale(Long id, SaleSaveDto dto) throws AmountProductException {
+        var product = searchProductForCodeBar(dto.getCodeBar());
+
+        var entity = modelMapper.map(dto, SaleEntity.class);
+        entity.setProduct(product);
+        entity.setId(id);
+
+        verifyAmountProduct(entity);
+
+        reduceAmountProduct(entity.getProduct(), entity.getAmount());
+
+        return modelMapper.map(repository.save(entity), SaleResponseDto.class);
     }
+
 }
