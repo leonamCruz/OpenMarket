@@ -1,6 +1,7 @@
 package tech.leonam.openmarket.service;
 
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import tech.leonam.openmarket.exception.IdSupplierNotFoundExpection;
 import tech.leonam.openmarket.model.dto.SupplierResponseDto;
@@ -11,12 +12,9 @@ import tech.leonam.openmarket.repository.SupplierRepository;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class SupplierService {
     private final SupplierRepository supplierRepository;
-
-    public SupplierService(SupplierRepository supplierRepository) {
-        this.supplierRepository = supplierRepository;
-    }
 
     @Transactional
     public SupplierResponseDto save(SupplierSaveDto supplier) {
