@@ -1,6 +1,7 @@
 package tech.leonam.openmarket.controller;
 
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -15,13 +16,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/sale")
+@AllArgsConstructor
 public class SaleController {
 
     private final SaleService service;
 
-    public SaleController(SaleService service) {
-        this.service = service;
-    }
 
     @PostMapping
     public ResponseEntity<SaleResponseDto> saveSale(@RequestBody @Valid SaleSaveDto dto) throws AmountProductException {

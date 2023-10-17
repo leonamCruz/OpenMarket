@@ -1,6 +1,7 @@
 package tech.leonam.openmarket.controller;
 
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -14,12 +15,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/brand")
+@AllArgsConstructor
 public class BrandController {
     private final BrandService service;
-
-    public BrandController(BrandService service) {
-        this.service = service;
-    }
 
     @PostMapping
     public ResponseEntity<BrandResponseDto> save(@RequestBody @Valid BrandSaveDto brand){
