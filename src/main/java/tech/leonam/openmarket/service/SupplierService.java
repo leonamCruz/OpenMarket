@@ -2,6 +2,7 @@ package tech.leonam.openmarket.service;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import tech.leonam.openmarket.exception.IdSupplierNotFoundExpection;
 import tech.leonam.openmarket.model.dto.SupplierResponseDto;
@@ -15,46 +16,26 @@ import java.util.List;
 @AllArgsConstructor
 public class SupplierService {
     private final SupplierRepository supplierRepository;
+    private final ModelMapper modelMapper;
 
     @Transactional
     public SupplierResponseDto save(SupplierSaveDto supplier) {
-        var entity = dtoToEntity(supplier);
+        var entity = modelMapper.map(supplier,SupplierEntity.class);
 
         var entitySaved = supplierRepository.save(entity);
 
-        return entityToResponse(entitySaved);
+        return modelMapper.map(entitySaved, SupplierResponseDto.class);
     }
 
     public SupplierResponseDto findByIdService(Long id) throws IdSupplierNotFoundExpection {
         var entityFind = supplierRepository.findById(id).orElseThrow(() -> new IdSupplierNotFoundExpection("Id " + id + " not found"));
 
-        return entityToResponse(entityFind);
+        return modelMapper.map(entityFind, SupplierResponseDto.class);
     }
     public SupplierEntity findById(Long id) throws IdSupplierNotFoundExpection {
         return supplierRepository.findById(id).orElseThrow(() -> new IdSupplierNotFoundExpection("Id " + id + " not found"));
     }
 
-    public static SupplierResponseDto entityToResponse(SupplierEntity entity){
-        var entityResponse = new SupplierResponseDto();
-        entityResponse.setId(entity.getId());
-        entityResponse.setName(entity.getName());
-        entityResponse.setEmail(entity.getEmail());
-        entityResponse.setNumberPhone(entity.getNumberPhone());
-        entityResponse.setCnpj(entity.getCnpj());
-        entityResponse.setAddress(entity.getAddress());
-
-        return entityResponse;
-    }
-    public static SupplierEntity dtoToEntity(SupplierSaveDto supplier){
-        var entity = new SupplierEntity();
-        entity.setName(supplier.getName());
-        entity.setEmail(supplier.getEmail());
-        entity.setNumberPhone(supplier.getNumberPhone());
-        entity.setCnpj(supplier.getCnpj());
-        entity.setAddress(supplier.getAddress());
-
-        return entity;
-    }
     public List<SupplierEntity> findAll() {
         return supplierRepository.findAll();
     }
@@ -69,12 +50,12 @@ public class SupplierService {
     public SupplierResponseDto update(Long id, SupplierSaveDto supplier) throws IdSupplierNotFoundExpection {
         verifyIfNotExistsId(id);
 
-        var entity = dtoToEntity(supplier);
+        var entity = modelMapper.map(supplier, SupplierEntity.class);
         entity.setId(id);
 
         var saved = supplierRepository.save(entity);
 
-        return entityToResponse(saved);
+        return modelMapper.map(saved, SupplierResponseDto.class);
     }
 
     public void verifyIfNotExistsId(Long id) throws IdSupplierNotFoundExpection {
