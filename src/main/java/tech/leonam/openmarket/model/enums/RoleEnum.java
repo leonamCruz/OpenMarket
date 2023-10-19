@@ -8,8 +8,7 @@ import lombok.Getter;
 public enum RoleEnum {
     MANAGER(0,"manager"),
     CASHIER(1,"cashier"),
-    ADMINISTRATIVE(2,"administrative"),
-    COUNTER(3,"counter");
+    ADMINISTRATIVE(2,"administrative");
 
     private final int code;
     private final String description;

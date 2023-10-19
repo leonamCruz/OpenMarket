@@ -3,6 +3,7 @@ package tech.leonam.openmarket.controller;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +29,7 @@ public class SaleController {
 
     private final SaleService service;
 
-
+    @PreAuthorize("hasRole('ROLE_CASHIER')")
     @PostMapping
     public ResponseEntity<SaleResponseDto> saveSale(@RequestBody @Valid SaleSaveDto dto) throws AmountProductException {
         var entitySaved = service.saveSale(dto);
@@ -37,21 +38,25 @@ public class SaleController {
         return ResponseEntity.created(uri).body(entitySaved);
     }
 
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     @DeleteMapping("/{id}")
     public void deleteSale(@PathVariable Long id) throws IdSaleNotFoundException {
         service.deleteSale(id);
     }
 
+    @PreAuthorize("hasRole('ROLE_CASHIER')")
     @GetMapping
-    public ResponseEntity<List<SaleEntity>> findAll(){
+    public ResponseEntity<List<SaleEntity>> findAll() {
         return ResponseEntity.ok(service.getAll());
     }
 
+    @PreAuthorize("hasRole('ROLE_CASHIER')")
     @GetMapping("/{id}")
-    public ResponseEntity<SaleResponseDto> findById(@PathVariable Long id){
+    public ResponseEntity<SaleResponseDto> findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PutMapping("/{id}")
     public ResponseEntity<SaleResponseDto> updateSale(@PathVariable Long id, @RequestBody @Valid SaleSaveDto dto) throws AmountProductException {
         return ResponseEntity.ok(service.updateSale(id, dto));

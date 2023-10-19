@@ -3,6 +3,7 @@ package tech.leonam.openmarket.controller;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import tech.leonam.openmarket.service.BrandService;
 
 import java.util.List;
 
+@PreAuthorize("hasRole('ROLE_MANAGER')")
 @RestController
 @RequestMapping("api/brand")
 @AllArgsConstructor
@@ -55,3 +57,4 @@ public class BrandController {
     }
 
 }
+

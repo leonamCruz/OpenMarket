@@ -17,13 +17,15 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-
 public class LoginEntity implements UserDetails {
 
     @Id
     private String cpf;
     private String password;
     private RoleEnum role;
+    public static final SimpleGrantedAuthority ROLE_MANAGER = new SimpleGrantedAuthority("ROLE_MANAGER");
+    public static final SimpleGrantedAuthority ROLE_ADMINISTRATIVE = new SimpleGrantedAuthority("ROLE_ADMINISTRATIVE");
+    public static final SimpleGrantedAuthority ROLE_CASHIER = new SimpleGrantedAuthority("ROLE_CASHIER");
 
     public LoginEntity(String cpf, String password, RoleEnum role) {
         this.cpf = cpf;
@@ -33,9 +35,13 @@ public class LoginEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == RoleEnum.MANAGER) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
 
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return switch (this.role){
+            case MANAGER -> List.of(ROLE_MANAGER,ROLE_ADMINISTRATIVE,ROLE_CASHIER);
+            case ADMINISTRATIVE -> List.of(ROLE_ADMINISTRATIVE,ROLE_CASHIER);
+            case CASHIER -> List.of(ROLE_CASHIER);
+        };
+
     }
 
     @Override
