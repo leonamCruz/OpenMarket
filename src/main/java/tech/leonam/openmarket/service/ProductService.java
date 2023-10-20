@@ -27,7 +27,7 @@ public class ProductService {
         var entityBrand = brandService.findById(entity.getBrandNumber());
         var entitySupplier = supplierService.findById(entity.getSupplierNumber());
 
-        var entityForSave = dtoToEntity(entity);
+        var entityForSave = modelMapper.map(entity, ProductEntity.class);
 
         entityForSave.setBrandEntity(entityBrand);
         entityForSave.setSupplierEntity(entitySupplier);
@@ -37,19 +37,6 @@ public class ProductService {
 
         return modelMapper.map(entitySaved, ProductResponseDto.class);
     }
-
-    public ProductEntity dtoToEntity(ProductSaveDto saveDto){
-        var entity = new ProductEntity();
-        entity.setName(saveDto.getName());
-        entity.setAmount(saveDto.getAmount());
-        entity.setPrice(saveDto.getPrice());
-        entity.setCategoryEnum(saveDto.getCategory());
-        entity.setUnit(saveDto.getUnit());
-        entity.setCodeBar(saveDto.getCodeBar());
-
-        return entity;
-    }
-
     public List<ProductEntity> findAll() {
         return productRepository.findAll();
     }

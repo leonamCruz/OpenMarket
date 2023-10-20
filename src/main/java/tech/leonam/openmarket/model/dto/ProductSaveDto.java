@@ -24,7 +24,7 @@ public class ProductSaveDto {
     @NotNull(message = "Id do fornecedor não pode ser nulo.")
     private Long supplierNumber;
     @NotNull(message = "Categoria não pode ser nula.")
-    private CategoryEnum category;
+    private CategoryEnum categoryEnum;
     @NotNull(message = "Unidade não pode ser nula.")
     private String unit;
     @NotNull(message = "Código de barras não pode ser nulo.")
