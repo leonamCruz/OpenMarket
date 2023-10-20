@@ -10,5 +10,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/report")
 @AllArgsConstructor
 public class ReportController {
-
 }

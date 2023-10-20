@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import tech.leonam.openmarket.model.enums.RoleEnum;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class LoginEntity implements UserDetails {
     private String cpf;
     private String password;
     private RoleEnum role;
+    private LocalDateTime localDateTime;
     public static final SimpleGrantedAuthority ROLE_MANAGER = new SimpleGrantedAuthority("ROLE_MANAGER");
     public static final SimpleGrantedAuthority ROLE_ADMINISTRATIVE = new SimpleGrantedAuthority("ROLE_ADMINISTRATIVE");
     public static final SimpleGrantedAuthority ROLE_CASHIER = new SimpleGrantedAuthority("ROLE_CASHIER");

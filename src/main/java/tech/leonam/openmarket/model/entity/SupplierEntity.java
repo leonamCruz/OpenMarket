@@ -7,6 +7,8 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -24,4 +26,6 @@ public class SupplierEntity {
     private String numberPhone;
 
     private String email;
+
+    private LocalDateTime localDateTime;
 }

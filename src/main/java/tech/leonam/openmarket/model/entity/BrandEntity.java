@@ -7,6 +7,8 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -16,5 +18,6 @@ public class BrandEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     private String name;
+    private LocalDateTime localDateTime;
 
 }

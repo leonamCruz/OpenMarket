@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class ProductSaveDto {
+
     @NotNull(message = "Nome não pode ser nulo.")
     private String name;
     @NotNull(message = "Quantidade não pode ser nula.")
