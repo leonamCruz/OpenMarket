@@ -8,9 +8,9 @@ import tech.leonam.openmarket.model.enums.CategoryEnum;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity
 @Getter
 @Setter
+@Entity
 public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

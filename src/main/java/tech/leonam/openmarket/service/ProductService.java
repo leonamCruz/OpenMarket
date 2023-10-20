@@ -28,6 +28,7 @@ public class ProductService {
         var entitySupplier = supplierService.findById(entity.getIdSupplier());
 
         var entityForSave = modelMapper.map(entity, ProductEntity.class);
+
         entityForSave.setBrand(entityBrand);
         entityForSave.setSupplier(entitySupplier);
         entityForSave.setLocalDateTime(LocalDateTime.now(ZoneId.of("America/Belem")));
