@@ -10,6 +10,8 @@ import tech.leonam.openmarket.model.dto.SupplierSaveDto;
 import tech.leonam.openmarket.model.entity.SupplierEntity;
 import tech.leonam.openmarket.repository.SupplierRepository;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Service
@@ -52,6 +54,7 @@ public class SupplierService {
 
         var entity = modelMapper.map(supplier, SupplierEntity.class);
         entity.setId(id);
+        entity.setLocalDateTime(LocalDateTime.now(ZoneId.of("America/Belem")));
 
         var saved = supplierRepository.save(entity);
 

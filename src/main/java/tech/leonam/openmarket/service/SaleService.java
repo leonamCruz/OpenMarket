@@ -14,6 +14,8 @@ import tech.leonam.openmarket.model.entity.ProductEntity;
 import tech.leonam.openmarket.model.entity.SaleEntity;
 import tech.leonam.openmarket.repository.SaleRepository;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Service
@@ -30,6 +32,8 @@ public class SaleService {
         entity.setProduct(product);
 
         verifyAmountProduct(entity);
+
+        entity.setLocalDateTime(LocalDateTime.now(ZoneId.of("America/Belem")));
 
         reduceAmountProduct(entity.getProduct(), entity.getAmount());
 

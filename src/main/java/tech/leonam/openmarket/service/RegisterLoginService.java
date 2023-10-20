@@ -11,6 +11,9 @@ import tech.leonam.openmarket.model.dto.LoginRegisterResponseDto;
 import tech.leonam.openmarket.model.entity.LoginEntity;
 import tech.leonam.openmarket.repository.RespositoryLogin;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
 @Service
 @AllArgsConstructor
 public class RegisterLoginService {
@@ -25,7 +28,7 @@ public class RegisterLoginService {
 
         var login = modelMapper.map(registerDto, LoginEntity.class);
         login.setPassword(passwordEncripyted);
-
+        login.setLocalDateTime(LocalDateTime.now(ZoneId.of("America/Belem")));
         var saved = respositoryLogin.save(login);
 
         return modelMapper.map(saved, LoginRegisterResponseDto.class);

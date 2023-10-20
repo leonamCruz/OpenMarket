@@ -9,6 +9,8 @@ import tech.leonam.openmarket.model.dto.BrandSaveDto;
 import tech.leonam.openmarket.model.entity.BrandEntity;
 import tech.leonam.openmarket.repository.BrandRepository;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Service
@@ -18,7 +20,11 @@ public class BrandService {
     private final ModelMapper modelMapper;
 
     public BrandResponseDto save(BrandSaveDto brandSaveDto) {
-        var entitySaved = brandRepository.save(modelMapper.map(brandSaveDto,BrandEntity.class));
+        var entityForSave = new BrandEntity();
+        modelMapper.map(brandSaveDto, entityForSave);
+        entityForSave.setLocalDateTime(LocalDateTime.now(ZoneId.of("America/Belem")));
+
+        var entitySaved = brandRepository.save(entityForSave);
 
         return modelMapper.map(entitySaved, BrandResponseDto.class);
     }
