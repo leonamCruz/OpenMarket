@@ -7,6 +7,7 @@ import tech.leonam.openmarket.model.entity.SupplierEntity;
 import tech.leonam.openmarket.model.enums.CategoryEnum;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -21,5 +22,5 @@ public class ProductResponseDto {
     private CategoryEnum category;
     private String unit;
     private String codeBar;
-
+    private LocalDateTime localDateTime;
 }
