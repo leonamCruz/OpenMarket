@@ -6,6 +6,7 @@ import lombok.Setter;
 import tech.leonam.openmarket.model.enums.CategoryEnum;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -32,5 +33,6 @@ public class ProductEntity {
     private String unit;
 
     private String codeBar;
+    private LocalDateTime localDateTime;
 
 }
