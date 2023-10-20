@@ -28,7 +28,7 @@ public class ProductEntity {
     @ManyToOne
     private SupplierEntity supplierEntity;
 
-    private CategoryEnum categoryEnum;
+    private CategoryEnum category;
 
     private String unit;
 
