@@ -20,9 +20,9 @@ public class ProductSaveDto {
     @NotNull(message = "Preço não pode ser nulo.")
     private BigDecimal price;
     @NotNull(message = "Id da marca não pode ser nulo.")
-    private Long idBrand;
+    private Long brandNumber;
     @NotNull(message = "Id do fornecedor não pode ser nulo.")
-    private Long idSupplier;
+    private Long supplierNumber;
     @NotNull(message = "Categoria não pode ser nula.")
     private CategoryEnum category;
     @NotNull(message = "Unidade não pode ser nula.")
@@ -37,12 +37,12 @@ public class ProductSaveDto {
 
     @AssertTrue(message = "Id da marca não pode ser negativo.")
     private boolean isIdBrandNotNegative() {
-        return idBrand >= 0;
+        return brandNumber >= 0;
     }
 
     @AssertTrue(message = "Id do fornecedor não pode ser negativo.")
     private boolean isIdSupplierNotNegative() {
-        return idSupplier >= 0;
+        return supplierNumber >= 0;
     }
 
     @AssertTrue(message = "Quantidade não pode ser negativa.")

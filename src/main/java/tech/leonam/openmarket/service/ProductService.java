@@ -24,13 +24,13 @@ public class ProductService {
     private final ModelMapper modelMapper;
 
     public ProductResponseDto save(ProductSaveDto entity) throws IdSupplierNotFoundExpection, IdBrandNotFoundExpection {
-        var entityBrand = brandService.findById(entity.getIdBrand());
-        var entitySupplier = supplierService.findById(entity.getIdSupplier());
+        var entityBrand = brandService.findById(entity.getBrandNumber());
+        var entitySupplier = supplierService.findById(entity.getSupplierNumber());
 
         var entityForSave = dtoToEntity(entity);
 
-        entityForSave.setBrand(entityBrand);
-        entityForSave.setSupplier(entitySupplier);
+        entityForSave.setBrandEntity(entityBrand);
+        entityForSave.setSupplierEntity(entitySupplier);
         entityForSave.setLocalDateTime(LocalDateTime.now(ZoneId.of("America/Belem")));
 
         var entitySaved = productRepository.save(entityForSave);
@@ -43,7 +43,7 @@ public class ProductService {
         entity.setName(saveDto.getName());
         entity.setAmount(saveDto.getAmount());
         entity.setPrice(saveDto.getPrice());
-        entity.setCategory(saveDto.getCategory());
+        entity.setCategoryEnum(saveDto.getCategory());
         entity.setUnit(saveDto.getUnit());
         entity.setCodeBar(saveDto.getCodeBar());
 
@@ -59,13 +59,13 @@ public class ProductService {
     }
 
     public ProductResponseDto update(Long id, ProductSaveDto entity) throws IdSupplierNotFoundExpection, IdBrandNotFoundExpection {
-        var entityBrand = brandService.findById(entity.getIdBrand());
-        var entitySupplier = supplierService.findById(entity.getIdSupplier());
+        var entityBrand = brandService.findById(entity.getBrandNumber());
+        var entitySupplier = supplierService.findById(entity.getSupplierNumber());
 
         var entityForSave = modelMapper.map(entity, ProductEntity.class);
-        entityForSave.setBrand(entityBrand);
-        entityForSave.setSupplier(entitySupplier);
-        entity.setIdBrand(id);
+        entityForSave.setBrandEntity(entityBrand);
+        entityForSave.setSupplierEntity(entitySupplier);
+        entityForSave.setId(id);
 
         var entitySaved = productRepository.save(entityForSave);
 

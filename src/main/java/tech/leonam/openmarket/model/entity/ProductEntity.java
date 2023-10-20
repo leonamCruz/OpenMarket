@@ -23,12 +23,12 @@ public class ProductEntity {
     private BigDecimal price;
 
     @ManyToOne
-    private BrandEntity brand;
+    private BrandEntity brandEntity;
 
     @ManyToOne
-    private SupplierEntity supplier;
+    private SupplierEntity supplierEntity;
 
-    private CategoryEnum category;
+    private CategoryEnum categoryEnum;
 
     private String unit;
 
