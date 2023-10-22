@@ -1,10 +1,8 @@
 package tech.leonam.openmarket.controller;
 
-import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +16,8 @@ import tech.leonam.openmarket.model.dto.LoginRegisterResponseDto;
 import tech.leonam.openmarket.model.dto.LoginResponseDto;
 import tech.leonam.openmarket.service.LoginService;
 import tech.leonam.openmarket.service.RegisterLoginService;
+
+import javax.management.relation.RoleNotFoundException;
 
 @RestController
 @RequestMapping("/api/login")
@@ -33,7 +33,7 @@ public class LoginController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<LoginRegisterResponseDto> register(@RequestBody @Valid LoginRegisterDto registerDto) throws PasswordFormatInvalidException, CpfExistsExecption {
+    public ResponseEntity<LoginRegisterResponseDto> register(@RequestBody @Valid LoginRegisterDto registerDto) throws PasswordFormatInvalidException, CpfExistsExecption, RoleNotFoundException {
         var entitySaved = registerLoginService.save(registerDto);
         var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(entitySaved.getCpf()).toUri();
 

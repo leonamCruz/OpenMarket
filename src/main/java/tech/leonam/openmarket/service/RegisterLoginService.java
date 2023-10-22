@@ -9,8 +9,10 @@ import tech.leonam.openmarket.exception.PasswordFormatInvalidException;
 import tech.leonam.openmarket.model.dto.LoginRegisterDto;
 import tech.leonam.openmarket.model.dto.LoginRegisterResponseDto;
 import tech.leonam.openmarket.model.entity.LoginEntity;
+import tech.leonam.openmarket.model.enums.RoleEnum;
 import tech.leonam.openmarket.repository.RespositoryLogin;
 
+import javax.management.relation.RoleNotFoundException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
@@ -20,10 +22,10 @@ public class RegisterLoginService {
     private final RespositoryLogin respositoryLogin;
     private final ModelMapper modelMapper;
 
-    public LoginRegisterResponseDto save(LoginRegisterDto registerDto) throws CpfExistsExecption, PasswordFormatInvalidException {
+    public LoginRegisterResponseDto save(LoginRegisterDto registerDto) throws CpfExistsExecption, PasswordFormatInvalidException, RoleNotFoundException {
         verifyCpf(registerDto.getCpf());
         verifyPassword(registerDto.getPassword());
-
+        roleIsNull(registerDto.getRole());
         var passwordEncripyted = new BCryptPasswordEncoder().encode(registerDto.getPassword());
 
         var login = modelMapper.map(registerDto, LoginEntity.class);
@@ -52,5 +54,8 @@ public class RegisterLoginService {
         if(!contains) throw new PasswordFormatInvalidException("Senha Inválida.");
     }
 
+    public void roleIsNull(RoleEnum roleEnum) throws RoleNotFoundException {
+        if (roleEnum == null) throw new RoleNotFoundException("Privilégios não foram encontrados.");
+    }
 }
 

@@ -10,6 +10,5 @@ import tech.leonam.openmarket.model.enums.RoleEnum;
 @Setter
 public class LoginRegisterResponseDto {
     private String cpf;
-    private String password;
     private RoleEnum role;
 }
