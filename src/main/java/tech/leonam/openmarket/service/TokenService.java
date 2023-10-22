@@ -24,7 +24,11 @@ public class TokenService {
     }
 
     public String validationToken(String token) throws JWTVerificationException {
-        return JWT.require(Algorithm.HMAC256(secret)).withIssuer(ISSUER).build().verify(token).getSubject();
+        if(token != null){
+            return JWT.require(Algorithm.HMAC256(secret)).withIssuer(ISSUER).build().verify(token).getSubject();
+        }
+
+        return "";
     }
 
     private Instant genExpirationDate() {
