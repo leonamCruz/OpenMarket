@@ -1,5 +1,7 @@
 package tech.leonam.openmarket.controller;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,15 @@ public class ErrorController {
         errors.forEach(System.out::println);
 
         return ResponseEntity.badRequest().body(new ErroListDto(HttpStatus.BAD_REQUEST, errors));
+    }
+
+    @ExceptionHandler(TokenExpiredException.class)
+    public ResponseEntity<ErroDto> tokenInvalid(JWTVerificationException e){
+        var error = new ErroDto();
+        error.setMessage(e.getMessage());
+        error.setStatus(HttpStatus.FORBIDDEN);
+
+        return ResponseEntity.badRequest().body(error);
     }
 
 }

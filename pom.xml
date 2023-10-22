@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>tech.leonam</groupId>
 	<artifactId>OpenMarket</artifactId>
-	<version>0.0.2-DEVELOPMENT</version>
+	<version>0.0.3-DEVELOPMENT</version>
 	<name>OpenMarket</name>
 	<description>Supermarket API</description>
 	<properties>
