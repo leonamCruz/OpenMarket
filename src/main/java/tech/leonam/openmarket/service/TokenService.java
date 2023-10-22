@@ -23,12 +23,8 @@ public class TokenService {
         return JWT.create().withIssuer(ISSUER).withSubject(entity.getCpf()).withExpiresAt(genExpirationDate()).sign(Algorithm.HMAC256(secret));
     }
 
-    public String validationToken(String token) {
-        try {
-            return JWT.require(Algorithm.HMAC256(secret)).withIssuer(ISSUER).build().verify(token).getSubject();
-        } catch (JWTVerificationException e) {
-            return "";
-        }
+    public String validationToken(String token) throws JWTVerificationException {
+        return JWT.require(Algorithm.HMAC256(secret)).withIssuer(ISSUER).build().verify(token).getSubject();
     }
 
     private Instant genExpirationDate() {
