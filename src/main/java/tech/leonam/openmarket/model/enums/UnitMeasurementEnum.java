@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum UnitMeasurementEnum {
     UNIT(0,"Unidade(s)"),
     DOZEN(1,"Dúzia"),
-    KG(2,"Quilo(s)");
+    KG(2,"Quilo(s)"),
+    BARS(3, "Barra(s)");
 
     private final int code;
     private final String description;
