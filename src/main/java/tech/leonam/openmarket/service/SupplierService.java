@@ -23,6 +23,7 @@ public class SupplierService {
     @Transactional
     public SupplierResponseDto save(SupplierSaveDto supplier) {
         var entity = modelMapper.map(supplier,SupplierEntity.class);
+        entity.setLocalDateTime(LocalDateTime.now(ZoneId.of("America/Belem")));
 
         var entitySaved = supplierRepository.save(entity);
 
